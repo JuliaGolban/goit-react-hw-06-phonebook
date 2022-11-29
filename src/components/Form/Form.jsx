@@ -1,41 +1,31 @@
-import { useState } from 'react';
-import { nanoid } from 'nanoid';
+import { useSelector, useDispatch } from 'react-redux';
+import { getContacts } from 'redux/selectors';
+import { addContact } from 'redux/contactsSlice';
 import TextBtn from 'components/buttons/TextBtn/TextBtn.styled';
 import { Form, Field, Label, Input } from './Form.styled';
 
-export const ContactForm = ({ onSubmit }) => {
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
-  const [id, setId] = useState(null);
-
-  const handleChange = e => {
-    const { name, value } = e.currentTarget;
-    const contactId = nanoid(4);
-    switch (name) {
-      case 'name':
-        setName(value);
-        break;
-
-      case 'number':
-        setNumber(value);
-        break;
-
-      default:
-        return;
-    }
-    setId(contactId);
-  };
+export const ContactForm = () => {
+  const contacts = useSelector(getContacts);
+  const dispatch = useDispatch();
 
   const handleSubmit = e => {
     e.preventDefault();
-    onSubmit({ name, number, id });
-    reset();
+    const form = e.target;
+    console.log('handleSubmit ~ form', form.elements);
+    checkExist(form.elements.name.value);
+    dispatch(addContact(form.elements.value));
+    form.reset();
   };
 
-  const reset = () => {
-    setName('');
-    setNumber('');
-    setId(null);
+  const checkExist = value => {
+    const normalizedName = value.toLowerCase();
+    const isExist = contacts.some(
+      ({ name }) => value.toLowerCase() === normalizedName
+    );
+
+    if (isExist) {
+      return alert(`${value} is already in contacts`);
+    }
   };
 
   return (
@@ -45,9 +35,6 @@ export const ContactForm = ({ onSubmit }) => {
         <Input
           type="text"
           name="name"
-          contactId={id}
-          value={name}
-          onChange={handleChange}
           pattern="^[a-zA-Za-яА-Я]+(([' -][a-zA-Za-яА-Я ])?[a-zA-Za-яА-Я]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
@@ -58,9 +45,6 @@ export const ContactForm = ({ onSubmit }) => {
         <Input
           type="tel"
           name="number"
-          contactId={id}
-          value={number}
-          onChange={handleChange}
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required

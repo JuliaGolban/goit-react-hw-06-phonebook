@@ -1,19 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import IconBtn from './IconBtn.styled';
+import { DeleteIconBtn } from './IconBtn.styled';
 
-const IconButton = ({ children, onClick, ...allyProps }) => (
-  <IconBtn type="button" onClick={onClick} {...allyProps}>
+const IconButton = ({ type, children, onClick, ...anyProps }) => (
+  <DeleteIconBtn type={type} onClick={onClick} {...anyProps}>
     {children}
-  </IconBtn>
+  </DeleteIconBtn>
 );
 
 IconButton.defaultProps = {
+  type: 'button',
   onClick: () => null,
   children: null,
 };
 
 IconButton.propTypes = {
+  type: PropTypes.string,
   onClick: PropTypes.func,
   children: PropTypes.node,
   'aria-label': PropTypes.string.isRequired,
