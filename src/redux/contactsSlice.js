@@ -24,7 +24,10 @@ const contactsSlice = createSlice({
       },
     },
     deleteContact(state, action) {
-      state.contact.filter(({ id }) => id !== action.payload.id);
+      const index = state.contact.findIndex(
+        contact => contact.id === action.payload
+      );
+      state.contact.splice(index, 1);
     },
   },
 });
@@ -33,6 +36,7 @@ const contactsPersistConfig = {
   key: 'contacts',
   storage,
   whitelist: ['contacts'],
+  version: 1,
 };
 
 export const { addContact, deleteContact } = contactsSlice.actions;

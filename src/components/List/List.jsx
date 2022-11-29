@@ -16,7 +16,7 @@ export const ContactList = () => {
   const visibleContacts = getVisibleContacts();
 
   const dispatch = useDispatch();
-  const deleteThisContact = id => dispatch(deleteContact(id));
+  const deleteThisContact = () => dispatch(deleteContact(contacts.id));
 
   return (
     <List>
@@ -25,10 +25,7 @@ export const ContactList = () => {
         return (
           <Item key={id}>
             {name}: {number}
-            <IconBtn
-              aria-label="Delete contact"
-              onClick={() => deleteThisContact(id)}
-            >
+            <IconBtn aria-label="Delete contact" onClick={deleteThisContact}>
               <DeleteIcon width="10" heigth="10" />
             </IconBtn>
           </Item>
