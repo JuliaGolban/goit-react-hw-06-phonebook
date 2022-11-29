@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getContacts, getFilter } from 'redux/selectors';
-import { deleteContact } from 'redux/contactsSlice';
+import { deleteContact } from 'redux/appSlice';
 import { List, Item } from './List.styled';
 import IconBtn from 'components/buttons/IconBtn/IconBtn';
 import { ReactComponent as DeleteIcon } from '../Icons/close.svg';
