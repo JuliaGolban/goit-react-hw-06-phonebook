@@ -1,24 +1,21 @@
 import styled from 'styled-components';
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  display: grid;
   justify-content: center;
-
+  grid-gap: 20px;
   width: 400px;
-  margin: 32px auto;
-
-  border-radius: 5px;
-  box-shadow: 5px 5px 10px -2px rgba(132, 132, 132, 0.5);
+  margin: 30px auto;
 `;
 const Section = styled.section`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-
   padding: 30px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.75);
 `;
 
 const Title = styled.h1`

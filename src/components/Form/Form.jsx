@@ -11,21 +11,21 @@ export const ContactForm = () => {
   const handleSubmit = e => {
     e.preventDefault();
     const form = e.target;
-    console.log('handleSubmit ~ form', form.elements);
-    checkExist(form.elements.name.value);
-    dispatch(addContact(form.elements.value));
-    form.reset();
-  };
 
-  const checkExist = value => {
-    const normalizedName = value.toLowerCase();
+    const name = form.elements.name;
+    const number = form.elements.number;
+    const normalizedName = name.value.toLowerCase();
+
     const isExist = contacts.some(
-      ({ name }) => value.toLowerCase() === normalizedName
+      ({ name }) => name.toLowerCase() === normalizedName
     );
 
     if (isExist) {
-      return alert(`${value} is already in contacts`);
+      return alert(`${name.value} is already in contacts`);
     }
+
+    dispatch(addContact(name.value, number.value));
+    form.reset();
   };
 
   return (
@@ -35,6 +35,7 @@ export const ContactForm = () => {
         <Input
           type="text"
           name="name"
+          value={contacts.name}
           pattern="^[a-zA-Za-яА-Я]+(([' -][a-zA-Za-яА-Я ])?[a-zA-Za-яА-Я]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
@@ -45,6 +46,7 @@ export const ContactForm = () => {
         <Input
           type="tel"
           name="number"
+          value={contacts.number}
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
