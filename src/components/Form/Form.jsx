@@ -1,4 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
+import { nanoid } from '@reduxjs/toolkit';
 import { getContacts } from 'redux/selectors';
 import { addContact } from 'redux/appSlice';
 import TextBtn from 'components/buttons/TextBtn/TextBtn.styled';
@@ -12,19 +13,24 @@ export const ContactForm = () => {
     e.preventDefault();
     const form = e.target;
 
+    const contactId = nanoid(4);
     const name = form.elements.name;
     const number = form.elements.number;
-    const normalizedName = name.value.toLowerCase();
+    const newContact = {
+      id: contactId,
+      name: name.value,
+      number: number.value,
+    };
 
+    const normalizedName = name.value.toLowerCase();
     const isExist = contacts.some(
       ({ name }) => name.toLowerCase() === normalizedName
     );
-
     if (isExist) {
-      return alert(`${name.value} is already in contacts`);
+      return alert(`${newContact.name} is already in contacts`);
     }
 
-    dispatch(addContact(name.value, number.value));
+    dispatch(addContact(newContact));
     form.reset();
   };
 
