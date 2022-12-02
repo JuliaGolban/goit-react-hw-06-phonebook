@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { nanoid } from '@reduxjs/toolkit';
 import { getContacts } from 'redux/selectors';
-import { addContact } from 'redux/appSlice';
+import { addContact } from 'redux/contactsSlice';
 import TextBtn from 'components/buttons/TextBtn/TextBtn.styled';
 import { Form, Field, Label, Input } from './Form.styled';
 

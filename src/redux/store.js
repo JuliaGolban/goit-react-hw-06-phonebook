@@ -8,12 +8,10 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
-import { persistedReducer } from './appSlice';
+import { persistedReducer } from './persistedReducer';
 
 export const store = configureStore({
-  reducer: {
-    contacts: persistedReducer,
-  },
+  reducer: persistedReducer,
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {
