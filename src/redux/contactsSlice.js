@@ -8,9 +8,9 @@ const contactsSlice = createSlice({
       state.push(action.payload);
     },
     deleteContact(state, action) {
-      const index = state.findIndex(({ id }) => id === action.payload);
-      state.splice(index, 1);
-      //   state.filter(({ id }) => id !== action.payload.id);
+      // const index = state.findIndex(({ id }) => id === action.payload);
+      // state.splice(index, 1);
+      return state.filter(({ id }) => id !== action.payload);
     },
   },
 });

@@ -1,10 +1,8 @@
+import { ContactItem } from 'components/Item/Item';
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { getContacts, getFilter } from 'redux/selectors';
-import { deleteContact } from 'redux/contactsSlice';
-import { List, Item } from './List.styled';
-import IconBtn from 'components/buttons/IconBtn/IconBtn';
-import { ReactComponent as DeleteIcon } from '../Icons/close.svg';
+import { List } from './List.styled';
 
 export const ContactList = () => {
   const contacts = useSelector(getContacts);
@@ -15,22 +13,12 @@ export const ContactList = () => {
   };
   const visibleContacts = getVisibleContacts();
 
-  const dispatch = useDispatch();
-  const deleteThisContact = () => dispatch(deleteContact(contacts.id));
-
   return (
     <List>
-      {visibleContacts.length === 0 && <Item>No contacts</Item>}
-      {visibleContacts.map(({ id, name, number }) => {
-        return (
-          <Item key={id}>
-            {name}: {number}
-            <IconBtn aria-label="Delete contact" onClick={deleteThisContact}>
-              <DeleteIcon width="10" heigth="10" />
-            </IconBtn>
-          </Item>
-        );
-      })}
+      {visibleContacts.length === 0 && <div>No contacts</div>}
+      {visibleContacts.map(({ id, name, number }) => (
+        <ContactItem key={id} id={id} name={name} number={number} />
+      ))}
     </List>
   );
 };
